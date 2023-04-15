@@ -1,0 +1,11 @@
+body {
+    background-color: beige;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: center;
+    width: 50%;
+}
