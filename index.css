@@ -1,5 +1,11 @@
 body {
     background-color: beige;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.title {
+    text-align: center;
 }
 
 form {
@@ -7,5 +13,10 @@ form {
     flex-direction: column;
     align-content: space-between;
     justify-content: center;
-    width: 50%;
+    width: 40%;
+}
+.topnav {
+    display: flex;
+    justify-content: space-between;
+    height: 10%;
 }

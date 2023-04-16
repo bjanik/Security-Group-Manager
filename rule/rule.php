@@ -1,12 +1,21 @@
 <?php
+    session_start();
     require_once('../utils/utils.php');
-    
+
     $conn = connection();
-    $query = "SELECT name from `security_group`";
-    $sgNames = mysqli_query($conn, $query);
+    parse_str($_SERVER['QUERY_STRING'], $params);
+
+    $query = "SELECT * from `security_group_rule`";
+    if (!empty($params['id_security_group'])) {
+        // $query .= " WHERE `id_security_group` = '$params['id_security_group']'";
+        $query .= " WHERE `id_security_group` = $params[id_security_group]";
+    }
+    $result = mysqli_query($conn, $query);
+    $arr_rules = [];
+    if ($result->num_rows > 0) {
+        $arr_rules = $result->fetch_all(MYSQLI_ASSOC);
+    }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,32 +23,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../index.css">
-    <title>Rule creation</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="/index.css">
+    <title>Security groups</title>
 </head>
 <body>
-    <div class="title">
-        <h1>Rule creation</h1>
-        <form action="rule_creation.php" method="POST">
-            Name: <input type="text" name="name" placeholder="name" required></br>
-            Ip source: <input type="text" name="ip_source" placeholder="ip_source" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" required></br>
-            Ip dest: <input type="text" name="ip_dest" placeholder="ip_dest" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" required></br>
-            Port source: <input type="text" name="port_source" placeholder="port_source" pattern="\d+" required></br>
-            Port dest: <input type="text" name="port_dest" placeholder="port_dest" pattern="\d+" required></br>
-            Protocol: <input type="text" name="protocol" placeholder="protocol" required></br>
-            Security group: <select name='Security group' placeholder="security group name" required>
-            <?php
-                while ($sg = mysqli_fetch_array($sgNames, MYSQLI_ASSOC)):;
-            ?>
-                <option value="<?php echo $sg["name"];?>">
-                    <?php echo $sg["name"];?>
-                </option>
-            <?php
-                endwhile;
-            ?>
-        </select></br>
-        <input type="submit" value="Create rule">
-        </form>
-    </div>
+    <?php
+        include("../header.php");
+    ?>
+    <table id="tblRule">
+        <thead>
+            <th>Name</th>
+            <th>Source port</th>
+            <th>Destination port</th>
+            <th>Source IP</th>
+            <th>Destination IP</th>
+            <th>Protocol</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <?php if(!empty($arr_rules)) { ?>
+                <?php foreach($arr_rules as $rule) { ?>
+                    <tr>
+                        <td><?php echo $sg['name']; ?></td>
+                        <td><?php echo $sg['source_port']; ?></td>
+                        <td><?php echo $sg['dest_port']; ?></td>
+                        <td><?php echo $sg['source_ip']; ?></td>
+                        <td><?php echo $sg['dest_ip']; ?></td>
+                        <td><?php echo $sg['protocol']; ?></td>
+                        <td><a href="delete.php?id=<?php echo $rule['id']; ?>">Delete</a></td>
+                    </tr>
+                <?php } ?>
+            <?php } ?>
+        </tbody>
+    </table>
+    <a href="rule_form.php"><button>Create rule</button></a>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $('#tblRule').DataTable();
+        })
+    </script>
 </body>
 </html>

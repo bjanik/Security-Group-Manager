@@ -10,7 +10,7 @@ if (!empty($_POST['login']) && !empty($_POST['password'])){
     $result = mysqli_query($conn, $query);
     if ($row = mysqli_fetch_assoc($result)) {
         $_SESSION['login'] = $login;
-        header("Location: http://localhost:8888/menu/menu.php");
+        header("Location: http://localhost:8888");
     }
     else {
         header("Location: http://localhost:8888/login/login.html");
