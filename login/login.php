@@ -4,9 +4,9 @@ session_start();
 
 if (!empty($_POST['login']) && !empty($_POST['password'])){
     $login = $_POST['login'];
-    $password = $_POST['password'];
+    $passwordHash = hash("sha256", $_POST['password']);
     $conn = connection();
-    $query = "SELECT id from User WHERE `email` = '$login' AND `password` = '$password'";
+    $query = "SELECT id from User WHERE `email` = '$login' AND `password_hash` = '$passwordHash'";
     $result = mysqli_query($conn, $query);
     if ($row = mysqli_fetch_assoc($result)) {
         $_SESSION['login'] = $login;

@@ -5,9 +5,9 @@
     $conn = connection();
     parse_str($_SERVER['QUERY_STRING'], $params);
 
-    $query = "SELECT * from `security_group_rule`";
+    $query = "SELECT `security_group_rule_id`, `source_port`, `port_range`, `source_ip`, `port_range`, `protocol`
+        FROM `security_group_rule`";
     if (!empty($params['id_security_group'])) {
-        // $query .= " WHERE `id_security_group` = '$params['id_security_group']'";
         $query .= " WHERE `id_security_group` = $params[id_security_group]";
     }
     $result = mysqli_query($conn, $query);
@@ -24,7 +24,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" type="text/css" href="/index.css">
     <title>Security groups</title>
 </head>
 <body>
@@ -33,25 +33,25 @@
     ?>
     <table id="tblRule">
         <thead>
-            <th>Name</th>
+            <th>Rule id</th>
             <th>Source port</th>
-            <th>Destination port</th>
+            <th>Port range</th>
             <th>Source IP</th>
             <th>Destination IP</th>
-            <th>Protocol</th>
-            <th>Action</th>
+            <th>Service</th>
+            <th>Actions</th>
         </thead>
         <tbody>
             <?php if(!empty($arr_rules)) { ?>
                 <?php foreach($arr_rules as $rule) { ?>
                     <tr>
-                        <td><?php echo $sg['name']; ?></td>
-                        <td><?php echo $sg['source_port']; ?></td>
-                        <td><?php echo $sg['dest_port']; ?></td>
-                        <td><?php echo $sg['source_ip']; ?></td>
-                        <td><?php echo $sg['dest_ip']; ?></td>
-                        <td><?php echo $sg['protocol']; ?></td>
-                        <td><a href="delete.php?id=<?php echo $rule['id']; ?>">Delete</a></td>
+                        <td><?php echo $rule['security_group_rule_id']; ?></td>
+                        <td><?php echo $rule['source_port']; ?></td>
+                        <td><?php echo $rule['port_range']; ?></td>
+                        <td><?php echo $rule['source_ip']; ?></td>
+                        <td><?php echo $rule['dest_ip']; ?></td>
+                        <td><?php echo $rule['protocol']; ?></td>
+                        <td><a href="delete.php?security_group_rule_id=<?php echo $rule['security_group_rule_id']; ?>">Delete</a></td>
                     </tr>
                 <?php } ?>
             <?php } ?>

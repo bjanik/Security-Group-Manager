@@ -22,28 +22,30 @@
     <title>Security groups</title>
 </head>
 <body>
-    <?php include("/header.php");?>
+    <?php include("../header.php");?>
     <table id="tblSg">
         <thead>
+            <th>Security group id</th>
             <th>Name</th>
             <th>Type</th>
-            <th>Cloud name</th>
+            <th>Cloud provider</th>
             <th>Actions</th>
         </thead>
         <tbody>
             <?php if(!empty($arr_sg)) { ?>
                 <?php foreach($arr_sg as $sg) { ?>
                     <tr>
+                        <td><?php echo $sg['security_group_id']; ?></td>
                         <td><?php echo $sg['name']; ?></td>
                         <td><?php echo $sg['type']; ?></td>
-                        <td><?php echo $sg['cloud_name']; ?></td>
-                        <td><a href="../rule/rule.php?id_security_group=<?php echo $sg['id']; ?>">Show rules</a> | <a href="delete.php?id=<?php echo $sg['id']; ?>">Delete</a></td>
+                        <td><?php echo $sg['cloud_provider']; ?></td>
+                        <td><button><a href="../rule/rule.php?security_group_id=<?php echo $sg['security_group_id']; ?>">Show rules</a></button> | <a href="delete.php?security_group_id=<?php echo $sg['security_group_id']; ?>">Delete</a></td>
                     </tr>
                 <?php } ?>
             <?php } ?>
         </tbody>
     </table>
-    <a href="security_group_form.php"><button>Create security group</button></a>
+    <button><a href="security_group_form.php">Create security group</a></button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script>

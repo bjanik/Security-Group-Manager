@@ -22,23 +22,20 @@
     <div class="title">
         <h1>Rule creation</h1>
         <form action="rule_creation.php" method="POST">
-            Name: <input type="text" name="name" placeholder="name" required></br>
-            Ip source: <input type="text" name="source_ip" placeholder="Source IP" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" required></br>
-            Ip dest: <input type="text" name="dest_ip" placeholder="Destination IP" pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$" required></br>
-            Port source: <input type="text" name="source_port" placeholder="Source port" pattern="\d+" required></br>
-            Port dest: <input type="text" name="dest_port" placeholder="Destination port" pattern="\d+" required></br>
-            Protocol: <input type="text" name="protocol" placeholder="Protocol" required></br>
-            Security group: <select name='security_group_name' placeholder="Security group name" required>
+            Security group name: <select name='security_group_name' placeholder="Security group name" required>
             <?php
                 while ($sg = mysqli_fetch_array($sgNames, MYSQLI_ASSOC)):;
             ?>
                 <option value="<?php echo $sg["name"];?>">
                     <?php echo $sg["name"];?>
                 </option>
-            <?php
-                endwhile;
-            ?>
-        </select></br>
+            <?php endwhile; ?>
+            </select></br>
+            Ip source: <input type="text" name="source_ip" placeholder="Source IP" pattern="^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})(?:\/(?:[0-9]|[12][0-9]|3[0-2]))?$)|^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})-((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$" required></br>
+            Ip dest: <input type="text" name="dest_ip" placeholder="Destination IP" pattern="^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})(?:\/(?:[0-9]|[12][0-9]|3[0-2]))?$)|^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})-((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$" required></br>
+            Port source: <input value="Any" type="text" name="source_port" placeholder="Source port" pattern="(\d+)|Any" required></br>
+            Port range: <input type="text" name="port_range" placeholder="Destination port" pattern="(\d+)|(\d+)-(\d+)" required></br>
+            Protocol: <input type="text" name="protocol" placeholder="Protocol" required></br>
         <input type="submit" value="Create rule">
         </form>
     </div>

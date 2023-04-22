@@ -2,10 +2,10 @@
     <a href="/index.php"><button>Homepage</button></a>
     <?php
         if (!empty($_SESSION['login'])) {
-            echo '<a href="/logout/logout.php"><button>Logout</button></a>';
+            echo '<button><a href="/logout/logout.php">Logout</a></button>';
         }
         else {
-            echo '<a href="/login/login.html"><button>Login</button></a>';
+            echo '<button><a href="/login/login.html">Login</a></button>';
         }
     ?>
 </header>

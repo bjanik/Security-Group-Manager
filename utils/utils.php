@@ -20,4 +20,54 @@ function checkSession() {
   }
 }
 
+function create_security_group_on_cloud_provider($providerId, $sgName) {
+  $returnCode = 0;
+  $output = "";
+  $groupId = exec("/Users/bart/.aws/create-sg $sgName", $output, $returnCode);
+  if ($returnCode != 0) {
+    return null;
+  }
+  return $groupId;
+}
+
+function delete_security_group_on_cloud_provider($securityGroupId) {
+  $returnCode = 0;
+  $output = "";
+  exec("/Users/bart/.aws/delete-sg $securityGroupId", $output, $returnCode);
+  return $returnCode;
+}
+
+function create_security_group_ingress_rule($securityGroupName, $protocol, $portRange, $cidr) {
+  if (strpos($portRange, "-")){
+    list($fromPort, $toPort) = explode("-", $portRange);
+  }
+  else {
+    $fromPort = $toPort = $portRange;
+  }
+  echo $securityGroupName;
+  echo $fromPort;
+  echo $toPort;
+  echo $protocol;
+  echo $cidr;
+
+  $returnCode = 0;
+  $output = "";
+  $securityGroupRuleId = exec("/Users/bart/.aws/create-ingress-rule.sh '$securityGroupName' '$protocol' '$fromPort' '$toPort' '$cidr'", $output, $returnCode);
+  if ($returnCode != 0) {
+    return null;
+  }
+  return $securityGroupRuleId;
+}
+
+function delete_security_group_rule_on_cloud_provider($securityGroupRuleId) {
+
+  $returnCode = 0;
+  $output = "";
+  $securityGroupRuleId = exec("/Users/bart/.aws/revoke-ingress-rule.sh '$securityGroupRuleId'", $output, $returnCode);
+  if ($returnCode != 0) {
+    return null;
+  }
+  return $securityGroupRuleId;
+}
+
 ?>
