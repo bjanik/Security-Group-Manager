@@ -21,33 +21,35 @@
 </head>
 <body>
     <?php include("../header.php");?>
-    <h1>Security group creation</h1>
-    <form action="security_group_creation.php" method="POST">
-        Name <input type="text" name="name" placeholder="name" required maxlength="64"><br>
-        Cloud provider <select name="cloud_provider" required>
-        <?php
-            while ($cloudProvider = mysqli_fetch_array($cloudProviders, MYSQLI_ASSOC)):;
-        ?>
-            <option value="<?php echo $cloudProvider["name"];?>">
-                <?php echo $cloudProvider["name"];?>
-            </option>
-        <?php
-            endwhile;
-        ?>
-        </select><br>
-        Security group type
-        <select name="type" required>
-        <?php
-            while ($sgType = mysqli_fetch_array($sgTypes, MYSQLI_ASSOC)):;
-        ?>
-            <option value="<?php echo $sgType["type"];?>">
-                <?php echo $sgType["type"];?>
-            </option>
-        <?php
-            endwhile;
-        ?>
-        </select><br>
-        <input type="submit" value="Create security group">
-    </form>
+    <div class="container">
+        <h1>Security group creation</h1>
+        <form action="security_group_creation.php" method="POST">
+            Name <input type="text" name="name" placeholder="name" required maxlength="64"><br>
+            Cloud provider <select name="cloud_provider" required>
+            <?php
+                while ($cloudProvider = mysqli_fetch_array($cloudProviders, MYSQLI_ASSOC)):;
+            ?>
+                <option value="<?php echo $cloudProvider["name"];?>">
+                    <?php echo $cloudProvider["name"];?>
+                </option>
+            <?php
+                endwhile;
+            ?>
+            </select><br>
+            Security group type
+            <select name="type" required>
+            <?php
+                while ($sgType = mysqli_fetch_array($sgTypes, MYSQLI_ASSOC)):;
+            ?>
+                <option value="<?php echo $sgType["type"];?>">
+                    <?php echo $sgType["type"];?>
+                </option>
+            <?php
+                endwhile;
+            ?>
+            </select><br>
+            <input type="submit" value="Create security group">
+        </form>
+    </div>
 </body>
 </html>

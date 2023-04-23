@@ -39,7 +39,7 @@
                         <td><?php echo $sg['name']; ?></td>
                         <td><?php echo $sg['type']; ?></td>
                         <td><?php echo $sg['cloud_provider']; ?></td>
-                        <td><button><a href="../rule/rule.php?security_group_id=<?php echo $sg['security_group_id']; ?>">Show rules</a></button> | <a href="delete.php?security_group_id=<?php echo $sg['security_group_id']; ?>">Delete</a></td>
+                        <td><button><a href="../rule/rule.php?security_group_id=<?php echo $sg['security_group_id']; ?>">Show rules</a></button> | <a href="delete_security_group.php?security_group_id=<?php echo $sg['security_group_id']; ?>">Delete</a></td>
                     </tr>
                 <?php } ?>
             <?php } ?>

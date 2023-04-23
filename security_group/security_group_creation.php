@@ -1,11 +1,17 @@
 <?php
     require_once('../utils/utils.php');
 
+    $securityGroupPrefixes = array(
+        "Father" => "sgfa-",
+        "Son" => "sgso-",
+        "Default" => "sgde-"
+    );
+
     $conn = connection();
     $cloudProvider = $_POST["cloud_provider"];
     $sgType = $_POST["type"];
 
-    $sgName = $_POST["name"];
+    $sgName = $securityGroupPrefixes[$sgType] . $_POST["name"] ;
     $groupId = create_security_group_on_cloud_provider($cloudProvider, $sgName);
     if ($groupId === null) {
         echo "An error occured on cloud side";

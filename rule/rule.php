@@ -5,7 +5,7 @@
     $conn = connection();
     parse_str($_SERVER['QUERY_STRING'], $params);
 
-    $query = "SELECT `security_group_rule_id`, `source_port`, `port_range`, `source_ip`, `port_range`, `protocol`
+    $query = "SELECT `security_group_rule_id`, `name`, `source_port`, `port_range`, `source_ip`, `port_range`, `protocol`
         FROM `security_group_rule`";
     if (!empty($params['id_security_group'])) {
         $query .= " WHERE `id_security_group` = $params[id_security_group]";
@@ -30,28 +30,32 @@
 <body>
     <?php
         include("../header.php");
+        if (isset($_GET["security_group_id"])) {
+            echo "<h2> Rules for security group $_GET[security_group_id]</h2>";
+        }
     ?>
+
     <table id="tblRule">
         <thead>
+            <th>Rule name</th>
             <th>Rule id</th>
             <th>Source port</th>
             <th>Port range</th>
             <th>Source IP</th>
-            <th>Destination IP</th>
-            <th>Service</th>
+            <th>Protocol</th>
             <th>Actions</th>
         </thead>
         <tbody>
             <?php if(!empty($arr_rules)) { ?>
                 <?php foreach($arr_rules as $rule) { ?>
                     <tr>
+                        <td><?php echo $rule['name']; ?></td>
                         <td><?php echo $rule['security_group_rule_id']; ?></td>
                         <td><?php echo $rule['source_port']; ?></td>
                         <td><?php echo $rule['port_range']; ?></td>
                         <td><?php echo $rule['source_ip']; ?></td>
-                        <td><?php echo $rule['dest_ip']; ?></td>
                         <td><?php echo $rule['protocol']; ?></td>
-                        <td><a href="delete.php?security_group_rule_id=<?php echo $rule['security_group_rule_id']; ?>">Delete</a></td>
+                        <td><a href="delete_rule.php?security_group_rule_id=<?php echo $rule['security_group_rule_id']; ?>">Delete</a></td>
                     </tr>
                 <?php } ?>
             <?php } ?>

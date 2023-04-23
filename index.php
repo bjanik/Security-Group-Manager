@@ -16,7 +16,7 @@
     <div class="title">
         <h1>Security group manager</h1>
         <?php
-            if (!empty($_SESSION['login'])) {
+            if (!empty($_SESSION['email'])) {
                 echo "<a href='security_group/security_group.php'><button>Security groups</button></a>";
                 echo "<a href='rule/rule.php'><button>Security group rules</button></a>";
                 echo "<button>VMS</button>";

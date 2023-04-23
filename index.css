@@ -22,17 +22,24 @@ form {
     height: 10%;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
 button {
     border-radius: 0;
     background: #ff9900;
     border-color: #ff9900;
     cursor: pointer;
-    font-family: var(--font-family-base-ua1f64, "Amazon Ember", "Helvetica Neue", Roboto, Arial, sans-serif);
-    width: 150px    ;
+    width: 150px;
 }
 
 table {
     border: black;
+    font-family: "Amazon Ember";
 }
 
 table tr:nth-child(odd) td{
@@ -41,3 +48,38 @@ table tr:nth-child(odd) td{
 table tr:nth-child(even) td{
     background-color: #f2f3f3;
 }
+
+
+.multiselect {
+    width: 200px;
+  }
+  
+  .selectBox {
+    position: relative;
+  }
+  
+  .selectBox select {
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+  #checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+  }
+  
+  #checkboxes label {
+    display: block;
+  }
+  
+  #checkboxes label:hover {
+    background-color: #1e90ff;
+  }
