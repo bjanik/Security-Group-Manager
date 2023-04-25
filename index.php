@@ -19,7 +19,7 @@
             if (!empty($_SESSION['email'])) {
                 echo "<a href='security_group/security_group.php'><button>Security groups</button></a>";
                 echo "<a href='rule/rule.php'><button>Security group rules</button></a>";
-                echo "<button>VMS</button>";
+                echo "<a href='instance/instance_form.php'><button>VMS</button></a>";
             }
         ?>
         

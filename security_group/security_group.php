@@ -1,6 +1,6 @@
 <?php
-    session_start();
     require_once('../utils/utils.php');
+    session_start();
 
     $conn = connection();
     $query = "SELECT * from `security_group`";

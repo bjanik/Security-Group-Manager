@@ -34,7 +34,7 @@
             Rule name: <input type="text" name="rule_name" placeholder="Rule name" required></br>
             Ip source: <input type="text" name="source_ip" placeholder="Source IP" pattern="^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})(?:\/(?:[0-9]|[12][0-9]|3[0-2]))?$)|^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})-((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$" required></br>
             Port source: <input value="Any" type="text" name="source_port" placeholder="Source port" pattern="(\d+)|Any" required></br>
-            Port range: <input type="text" name="port_range" placeholder="Destination port" pattern="(\d+)|(\d+)-(\d+)" required></br>
+            Destination port range: <input type="text" name="dest_port_range" placeholder="Destination port range" pattern="(\d+)|(\d+)-(\d+)" required></br>
             Protocol: <input type="text" name="protocol" placeholder="Protocol" required></br>
         <input type="submit" value="Create rule">
         </form>

@@ -4,9 +4,8 @@
     checkSession();
 
     $conn = connection();
-    $query = "SELECT name, security_group_id from security_group";
-    $secGroups = mysqli_query($conn, $query);
-
+    $query = "SELECT name, security_group_id from security_group WHERE type != 'Father'";
+    $secGroups = mysqli_query($conn, $query) or die("DIE");
 ?>
 
 <!DOCTYPE html>
@@ -15,17 +14,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../index.css">
     <script src="../script.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../index.css">
     <title>Instance creation form</title>
 </head>
 <body>
 <?php include("../header.php");?>
-<div>
+<div class="container">
     <h1>Instance creation</h1>
     <form action="instance_creation.php" method="POST">
         Instance name<input type="text" name="name" placeholder="Instance name" required>
-        Instance type<input type="text" name="type" placeholder="Instance type" value="t2.nano" required>
+        Instance type
+        <select name='type' placeholder="Instance type" required>
+            <option value="t2.nano">t2.nano</option>
+            <option value="t2.micro">t2.micro</option>
+            <option value="t2.small">t2.small</option>
+        </select>
         <div class="multiselect">
             <div class="selectBox" onclick="showCheckboxes()">
                 <select>

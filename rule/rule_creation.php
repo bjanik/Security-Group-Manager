@@ -6,7 +6,7 @@
     $securityGroupName = $_POST['security_group_name'];
     $ruleName = $_POST['rule_name'];
     $sourcePort = $_POST['source_port'];
-    $portRange = $_POST['port_range'];
+    $portRange = $_POST['dest_port_range'];
     $sourceIp = $_POST['source_ip'];
     $destIp = $_POST['dest_ip'];
     $protocol = $_POST['protocol'];
