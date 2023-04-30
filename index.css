@@ -38,7 +38,7 @@ button {
 }
 
 table {
-    border: black;
+    border: 2px, black;
     font-family: "Amazon Ember";
 }
 
@@ -48,7 +48,6 @@ table tr:nth-child(odd) td{
 table tr:nth-child(even) td{
     background-color: #f2f3f3;
 }
-
 
 .multiselect {
     width: 200px;
@@ -82,4 +81,21 @@ table tr:nth-child(even) td{
 
 #checkboxes label:hover {
   background-color: #1e90ff;
+}
+
+#fathersList {
+  display: none;
+}
+
+.confirmationModal {
+  display: none;
+
+}
+
+.openModal {
+  color: red;
+}
+
+.close {
+
 }

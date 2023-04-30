@@ -1,5 +1,7 @@
 <?php
     require_once('../utils/utils.php');
+    session_start();
+    checkSession();
 
     $securityGroupPrefixes = array(
         "Father" => "sgfa-",
@@ -7,18 +9,24 @@
         "Default" => "sgde-"
     );
 
-    $conn = connection();
     $cloudProvider = $_POST["cloud_provider"];
     $sgType = $_POST["type"];
+    if ($sgType === "Son" && !empty($_POST["father"])) {
+        $idFather = $_POST["father"];
+    }
+    else {
+        $idFather = "NULL";
+    }
+    $sgName = $securityGroupPrefixes[$sgType] . $_POST["name"];
 
-    $sgName = $securityGroupPrefixes[$sgType] . $_POST["name"] ;
     $groupId = create_security_group_on_cloud_provider($cloudProvider, $sgName);
     if ($groupId === null) {
         echo "An error occured on cloud side";
     }
     else {
-        $query = "INSERT INTO security_group (`security_group_id`, `name`, `cloud_provider`, `type`) VALUES ('$groupId', '$sgName', '$cloudProvider', '$sgType')";
-        mysqli_query($conn, $query) or die("Failed to insert new sg in database");
+        $conn = connection();
+        $query = "INSERT INTO `security_group` (`security_group_id`, `name`, `cloud_provider`, `type`, `id_father`) VALUES ('$groupId', '$sgName', '$cloudProvider', '$sgType', $idFather)";
+        $conn->query($query) or die("ERROR");
         header("Location: http://localhost:8888/security_group/security_group.php");
     }
 ?>

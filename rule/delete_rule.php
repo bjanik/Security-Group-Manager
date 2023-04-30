@@ -1,6 +1,5 @@
 <?php
     require_once('../utils/utils.php');
-
     session_start();
     checkSession();
 
@@ -14,7 +13,7 @@
     else {
         $conn = connection();
         $query = "DELETE FROM `security_group_rule` where security_group_rule_id = '$params[security_group_rule_id]'";
-        mysqli_query($conn, $query) or die("Mysql error");
+        $conn->query($query) or die("Mysql error");
         header("Location: http://localhost:8888/rule/rule.php");
     }
 

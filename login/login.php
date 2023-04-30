@@ -7,7 +7,7 @@
         $query = "SELECT password_hash from User WHERE email = '$email'";
 
         $conn = connection();
-        $pwh = mysqli_query($conn, $query);
+        $pwh = $conn->query($query);
         if ($passwordHashDb = mysqli_fetch_assoc($pwh)) {
 
             $passwordHash = hash("sha256", $_POST['password']);

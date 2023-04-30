@@ -4,7 +4,7 @@
 
     $conn = connection();
     $query = "SELECT * FROM `instance`";
-    $result = mysqli_query($conn, $query);
+    $result = $conn->query($query);
     $instances = [];
     if ($result->num_rows > 0) {
         $instances = $result->fetch_all(MYSQLI_ASSOC);
@@ -42,7 +42,7 @@
                         <td><?php echo $instance['type']; ?></td>
                         <td><?php echo $instance['public_ip']; ?></td>
                         <td><?php echo $instance['private_ip']; ?></td>
-                        <td><a href="delete_instance.php?instance_id=<?php echo $sg['instance_id']; ?>">Delete</a></td>
+                        <td><a href="delete_instance.php?instance_id=<?php echo $instance['instance_id']; ?>">Delete</a></td>
                     </tr>
                 <?php } ?>
             <?php } ?>

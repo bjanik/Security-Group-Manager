@@ -3,11 +3,11 @@
     session_start();
 
     $conn = connection();
-    $query = "SELECT * from `security_group`";
-    $result = mysqli_query($conn, $query);
-    $arr_sg = [];
+    $query = "SELECT `security_group_id`, `name`, `type`, `cloud_provider` from `security_group`";
+    $result = $conn->query($query);
+    $securityGroups = [];
     if ($result->num_rows > 0) {
-        $arr_sg = $result->fetch_all(MYSQLI_ASSOC);
+        $securityGroups = $result->fetch_all(MYSQLI_ASSOC);
     }
 ?>
 
@@ -32,14 +32,14 @@
             <th>Actions</th>
         </thead>
         <tbody>
-            <?php if(!empty($arr_sg)) { ?>
-                <?php foreach($arr_sg as $sg) { ?>
+            <?php if(!empty($securityGroups)) { ?>
+                <?php foreach($securityGroups as $securityGroup) { ?>
                     <tr>
-                        <td><?php echo $sg['security_group_id']; ?></td>
-                        <td><?php echo $sg['name']; ?></td>
-                        <td><?php echo $sg['type']; ?></td>
-                        <td><?php echo $sg['cloud_provider']; ?></td>
-                        <td><button><a href="../rule/rule.php?security_group_id=<?php echo $sg['security_group_id']; ?>">Show rules</a></button> | <a href="delete_security_group.php?security_group_id=<?php echo $sg['security_group_id']; ?>">Delete</a></td>
+                        <td><?php echo $securityGroup['security_group_id']; ?></td>
+                        <td><?php echo $securityGroup['name']; ?></td>
+                        <td><?php echo $securityGroup['type']; ?></td>
+                        <td><?php echo $securityGroup['cloud_provider']; ?></td>
+                        <td><button><a href="../rule/rule.php?security_group_name=<?php echo $securityGroup['name']; ?>">Show rules</a></button> | <a href="delete_security_group.php?security_group_id=<?php echo $securityGroup['security_group_id']; ?>">Delete</a></td>
                     </tr>
                 <?php } ?>
             <?php } ?>

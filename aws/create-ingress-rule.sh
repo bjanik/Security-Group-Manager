@@ -1,5 +1,5 @@
 cd /Users/bart/.aws
-. ./common
+. ../aws/common
 /usr/local/bin/aws ec2 authorize-security-group-ingress \
     --group-name $1 \
     --tag-specifications "ResourceType=security-group-rule,Tags=[{Key=Name,Value=$2}]" \

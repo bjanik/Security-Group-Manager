@@ -5,7 +5,8 @@
 
     $conn = connection();
     $query = "SELECT name, security_group_id from security_group WHERE type != 'Father'";
-    $secGroups = mysqli_query($conn, $query) or die("DIE");
+
+    $securityGroups = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
@@ -14,15 +15,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../script.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../index.css">
+    <script src="../script.js" type="text/javascript"></script>
+
     <title>Instance creation form</title>
 </head>
 <body>
-<?php include("../header.php");?>
-<div class="container">
+    <?php include("../header.php");?>
+    <div class="container">
     <h1>Instance creation</h1>
-    <form action="instance_creation.php" method="POST">
+    <form action="instance_creation.php" method="POST" class="container">
         Instance name<input type="text" name="name" placeholder="Instance name" required>
         Instance type
         <select name='type' placeholder="Instance type" required>
@@ -38,16 +40,23 @@
                 <div class="overSelect"></div>
             </div>
             <div id="checkboxes">
-                <?php
-                    while ($securityGroups = mysqli_fetch_array($secGroups, MYSQLI_ASSOC)):;
-                ?>
-                    <label for="<?php echo $securityGroups["name"]?>">
-                    <input type="checkbox" id="<?php echo $securityGroups["name"]?>" name="security_groups[]" value="<?php echo $securityGroups["security_group_id"]?>" /><?php echo $securityGroups["name"]?></label>
-                <?php endwhile; ?>
+                <?php foreach($securityGroups as $securityGroup) { ?>
+                    <label for="<?php echo $securityGroup["name"]?>">
+                    <input type="checkbox" id="<?php echo $securityGroup["name"]?>" name="security_groups[]" value="<?php echo $securityGroup["security_group_id"]?>" /><?php echo $securityGroup["name"]?></label>
+                    <?php } ?>
             </div>
+            </div>
+                <br>
+                <div class="openModal" onClick="openModal()">
+                    <button type="button">test</button>
+                </div>
+                    <div class="confirmationModal">
+                        <span class="close" onClick="closeModal()">&times;</span>
+                        <p>Some text in the Modal..</p>
+                        <input type="submit" value="Create instance">
+                    </div>
+            </form>
         </div>
-        <input type="submit" value="Create instance">
-    </form>
-</div>
-</body>
+    </body>
+<script src="../modal.js" type="text/javascript"></script>
 </html>

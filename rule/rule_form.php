@@ -5,7 +5,7 @@
     
     $conn = connection();
     $query = "SELECT name from `security_group`";
-    $sgNames = mysqli_query($conn, $query);
+    $sgNames = $conn->query($query);
 ?>
 
 <!DOCTYPE html>

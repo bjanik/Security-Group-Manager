@@ -5,15 +5,16 @@
     $conn = connection();
     parse_str($_SERVER['QUERY_STRING'], $params);
 
-    $query = "SELECT `security_group_rule_id`, `name`, `source_port`, `port_range`, `source_ip`, `port_range`, `protocol`
-        FROM `security_group_rule`";
-    if (!empty($params['id_security_group'])) {
-        $query .= " WHERE `id_security_group` = $params[id_security_group]";
+    var_dump($params);
+    $query = "SELECT `security_group_rule_id`, sgr.`name`, `source_port`, `dest_port_range`, `source_ip`, `protocol`
+        FROM `security_group_rule` sgr JOIN `security_group` sg ON sg.id = sgr.id_security_group";
+    if (!empty($params['security_group_name'])) {
+        $query .= " AND sg.`name` = '$params[security_group_name]'";
     }
-    $result = mysqli_query($conn, $query);
-    $arr_rules = [];
+    $result = $conn->query($query);
+    $rules = [];
     if ($result->num_rows > 0) {
-        $arr_rules = $result->fetch_all(MYSQLI_ASSOC);
+        $rules = $result->fetch_all(MYSQLI_ASSOC);
     }
 ?>
 
@@ -30,8 +31,8 @@
 <body>
     <?php
         include("../header.php");
-        if (isset($_GET["security_group_id"])) {
-            echo "<h2> Rules for security group $_GET[security_group_id]</h2>";
+        if (isset($_GET["security_group_name"])) {
+            echo "<h2> Rules for security group $_GET[security_group_name]</h2>";
         }
     ?>
 
@@ -40,19 +41,19 @@
             <th>Rule name</th>
             <th>Rule id</th>
             <th>Source port</th>
-            <th>Port range</th>
+            <th>Destination port range</th>
             <th>Source IP</th>
             <th>Protocol</th>
             <th>Actions</th>
         </thead>
         <tbody>
-            <?php if(!empty($arr_rules)) { ?>
-                <?php foreach($arr_rules as $rule) { ?>
+            <?php if(!empty($rules)) { ?>
+                <?php foreach($rules as $rule) { ?>
                     <tr>
                         <td><?php echo $rule['name']; ?></td>
                         <td><?php echo $rule['security_group_rule_id']; ?></td>
                         <td><?php echo $rule['source_port']; ?></td>
-                        <td><?php echo $rule['port_range']; ?></td>
+                        <td><?php echo $rule['dest_port_range']; ?></td>
                         <td><?php echo $rule['source_ip']; ?></td>
                         <td><?php echo $rule['protocol']; ?></td>
                         <td><a href="delete_rule.php?security_group_rule_id=<?php echo $rule['security_group_rule_id']; ?>">Delete</a></td>

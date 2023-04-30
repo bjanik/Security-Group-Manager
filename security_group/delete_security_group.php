@@ -14,7 +14,7 @@
     else {
         $conn = connection();
         $query = "DELETE FROM `security_group` where security_group_id = '$params[security_group_id]'";
-        mysqli_query($conn, $query) or die("Mysql error");
+        $conn->query($query);
         header("Location: http://localhost:8888/security_group/security_group.php");
     }
     

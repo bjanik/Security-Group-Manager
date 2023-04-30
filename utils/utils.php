@@ -55,25 +55,34 @@
   }
 
   function delete_security_group_rule_on_cloud_provider($securityGroupRuleId) {
-
     $returnCode = 0;
     $output = "";
     $securityGroupRuleId = exec("/Users/bart/.aws/revoke-ingress-rule.sh '$securityGroupRuleId'", $output, $returnCode);
     if ($returnCode != 0) {
       return null;
     }
-    return $securityGroupRuleId;
+    return 0;
   }
 
   function create_instance_on_cloud_provider($instanceName, $instanceType, $securityGroups) {
     $returnCode = 0;
     $output = "";
-    exec("/Users/bart/.aws/create-instance.sh '$instanceName' '$instanceType' '$securityGroups'", $output, $returnCode);
+    $input = "../aws/create-instance.sh '$instanceName' '$instanceType' '$securityGroups'";
+    exec("../aws/create-instance.sh '$instanceName' '$instanceType' '$securityGroups'", $output, $returnCode);
     if ($returnCode != 0) {
       return null;
     }
     $instanceData = json_decode(implode("", $output), TRUE);
     return $instanceData;
+  }
+
+  function delete_instance_on_cloud_provider($instanceId) {
+    $returnCode = 0;
+    exec("../aws/delete-instance.sh '$instanceId'", $output, $returnCode);
+    if ($returnCode !== 0) {
+      return null;
+    }
+    return 0;
   }
 
 ?>
