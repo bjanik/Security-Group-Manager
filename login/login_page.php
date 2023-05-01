@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="/index.css">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
     <form action="login.php" method="POST">
@@ -20,10 +20,10 @@
     <?php
         if (isset($_GET["error"])) {
             $error = $_GET["error"];
-            if ($error == "invalidemail") {
+            if ($error === "invalidemail") {
                 echo "<p class='error'>Invalid email</p>";
             }
-            else if ($error == "wrongpassword") {
+            else if ($error === "wrongpassword") {
                 echo "<p class='error'>Wrong password</p>";
             }
         }

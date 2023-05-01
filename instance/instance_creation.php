@@ -8,7 +8,7 @@
     $securityGroupsStr = join(" ", $securityGroups);
     $securityGroups = join("','", $securityGroups);
     
-    $query = "SELECT id, id_father FROM `security_group` WHERE security_group_id IN ('$securityGroups')";
+    $query = "SELECT id, id_father FROM `security_group` WHERE cloud_security_group_id IN ('$securityGroups')";
 
     $result = $conn->query($query);
     $result = $result->fetch_all(MYSQLI_ASSOC);
@@ -25,15 +25,14 @@
     $ids = array_unique($ids);
     $idsFatherStr = join("','", array_unique($idsFather));
 
-    $query = "SELECT security_group_id FROM security_group WHERE id IN ('$idsFatherStr')";
+    $query = "SELECT cloud_security_group_id FROM security_group WHERE id IN ('$idsFatherStr')";
     $result = $conn->query($query);
     $result = $result->fetch_all(MYSQLI_ASSOC);
     $cloudIds = [];
     foreach($result as $row) {
-        $cloudIds[] = $row['security_group_id'];
+        $cloudIds[] = $row['cloud_security_group_id'];
     }
     $cloudIds = array_unique($cloudIds);
-    var_dump($cloudIds);
 
     if ($cloudIds) {
         $cloudIds = join(" ", $cloudIds) . " " . $securityGroupsStr;
@@ -47,10 +46,10 @@
     }
     else {
         $conn = connection();
-        $instanceId = $instanceData["Instances"][0]["InstanceId"];
+        $cloudInstanceId = $instanceData["Instances"][0]["InstanceId"];
         $instancePublicIp = $instanceData["Instances"][0]["PublicIpAddress"];
         $instancePrivateIp = $instanceData["Instances"][0]["PrivateIpAddress"];
-        $query = "INSERT INTO instance (`instance_id`, `name`, `type`, `public_ip`, `private_ip`) VALUES ('$instanceId', '$instanceName', '$instanceType', '$instancePublicIp', '$instancePrivateIp')";
+        $query = "INSERT INTO instance (`cloud_instance_id`, `name`, `type`, `public_ip`, `private_ip`) VALUES ('$cloudInstanceId', '$instanceName', '$instanceType', '$instancePublicIp', '$instancePrivateIp')";
         $conn->query($query) or die("Died while trying to insert new instance to database");
         $instanceId = (int) mysqli_insert_id($conn);
 
@@ -61,7 +60,6 @@
             $queryParts[] =  "('" . $instanceId . "','" . $id . "')"; 
         }
         $query .= implode(",", $queryParts);
-        echo $query;
         $conn->query($query) or die("");
         header("Location: http://localhost:8888/instance/instance.php");
     }

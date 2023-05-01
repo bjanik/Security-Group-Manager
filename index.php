@@ -13,15 +13,17 @@
 </head>
 <body>
     <?php include("header.php");?>
-    <div class="title">
+    <div class="main-page">
         <h1>Security group manager</h1>
-        <?php
-            if (!empty($_SESSION['email'])) {
-                echo "<a href='security_group/security_group.php'><button>Security groups</button></a>";
-                echo "<a href='rule/rule.php'><button>Security group rules</button></a>";
-                echo "<a href='instance/instance.php'><button>VMS</button></a>";
-            }
-        ?>
+        <div class="menu">
+            <?php
+                if (!empty($_SESSION['email'])) {
+                    echo "<a href='security_group/security_group.php'><button>Security groups</button></a>";
+                    echo "<a href='rule/rule.php'><button>Security group rules</button></a>";
+                    echo "<a href='instance/instance.php'><button>Instances</button></a>";
+                }
+            ?>
+        <div>
     </div>
 </body>
 </html>

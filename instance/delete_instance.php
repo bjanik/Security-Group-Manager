@@ -13,7 +13,6 @@
     else {
         $conn = connection();
         $query = "DELETE FROM `instance` WHERE `instance_id` = '$params[instance_id]'";
-        echo $query;
         $conn->query($query);
         header("Location: http://localhost:8888/instance/instance.php");
     }

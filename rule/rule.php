@@ -1,12 +1,11 @@
 <?php
-    session_start();
     require_once('../utils/utils.php');
+    session_start();
+    checkSession();
 
     $conn = connection();
     parse_str($_SERVER['QUERY_STRING'], $params);
-
-    var_dump($params);
-    $query = "SELECT `security_group_rule_id`, sgr.`name`, `source_port`, `dest_port_range`, `source_ip`, `protocol`
+    $query = "SELECT `cloud_rule_id`, sgr.`name`, `source_port`, `dest_port_range`, `source_ip`, `protocol`
         FROM `security_group_rule` sgr JOIN `security_group` sg ON sg.id = sgr.id_security_group";
     if (!empty($params['security_group_name'])) {
         $query .= " AND sg.`name` = '$params[security_group_name]'";
@@ -51,18 +50,20 @@
                 <?php foreach($rules as $rule) { ?>
                     <tr>
                         <td><?php echo $rule['name']; ?></td>
-                        <td><?php echo $rule['security_group_rule_id']; ?></td>
+                        <td><?php echo $rule['cloud_rule_id']; ?></td>
                         <td><?php echo $rule['source_port']; ?></td>
                         <td><?php echo $rule['dest_port_range']; ?></td>
                         <td><?php echo $rule['source_ip']; ?></td>
                         <td><?php echo $rule['protocol']; ?></td>
-                        <td><a href="delete_rule.php?security_group_rule_id=<?php echo $rule['security_group_rule_id']; ?>">Delete</a></td>
+                        <td><a href="delete_rule.php?cloud_rule_id=<?php echo $rule['cloud_rule_id']; ?>"><button class="action-btn">Delete</button></a></td>
                     </tr>
                 <?php } ?>
             <?php } ?>
         </tbody>
     </table>
-    <a href="rule_form.php"><button>Create rule</button></a>
+    <div>
+        <a href="rule_form.php"><button>Create rule</button></a>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script>

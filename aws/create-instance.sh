@@ -1,4 +1,3 @@
-# cd /Users/bart/.aws
 . ../aws/common
 /usr/local/bin/aws ec2 run-instances --image-id ami-01a3ab628b8168507 \
     --count 1 \

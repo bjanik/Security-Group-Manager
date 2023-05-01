@@ -5,8 +5,19 @@ body {
     justify-content: space-around;
     text-decoration: none;
 }
-.title {
+.main-page {
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    justify-content: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: center;
+  gap: 5%;
 }
 
 form {
@@ -35,6 +46,12 @@ button {
     border-color: #ff9900;
     cursor: pointer;
     width: 150px;
+}
+
+.action-btn {
+  border-color: #f7ce89;
+  background: #f7ce89;
+  width: fit-content;
 }
 
 table {
@@ -96,6 +113,8 @@ table tr:nth-child(even) td{
   color: red;
 }
 
-.close {
-
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 2%;
 }

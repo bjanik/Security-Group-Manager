@@ -28,33 +28,27 @@
 </head>
 <body>
     <?php include("../header.php");?>
-    <div class="container">
+    <div class="container title">
         <h1>Security group creation</h1>
         <form action="security_group_creation.php" method="POST">
             Name <input type="text" name="name" placeholder="Name" required maxlength="64"><br>
             Cloud provider <select name="cloud_provider" required>
-                <?php foreach($cloudProviders as $cloudProvider) { ?>
-                    <option value="<?php echo $cloudProvider["name"];?>">
-                        <?php echo $cloudProvider["name"];?>
-                    </option>
-                <?php } ?>
+                <?php foreach($cloudProviders as $cloudProvider) {
+                    echo "<option value={$cloudProvider['name']}>{$cloudProvider['name']}</option>";
+                } ?>
             </select><br>
             Security group type
             <select id="sgType" name="type" type="text" required>
-                <?php foreach($sgTypes as $sgType) { ?>
-                    <option value="<?php echo $sgType["type"];?>">
-                        <?php echo $sgType["type"];?>
-                    </option>
-                <?php } ?>
+                <?php foreach($sgTypes as $sgType) {
+                    echo "<option value={$sgType['type']}>{$sgType['type']}</option>";
+                }?>
             </select><br>
-            <div id="fathersList">
+            <div class="sgList" id="fathersList">
                 Select Father
                 <select id="fatherSelection" name="father" type="text">
-                    <?php foreach($fathers as $father) { ?>
-                        <option value="<?php echo $father["id"];?>">
-                            <?php echo $father["name"];?>
-                        </option>
-                    <?php } ?>
+                    <?php foreach($fathers as $father) { 
+                        echo "<option value={$father['id']}>{$father['name']}</option>";
+                    }?>
                 </select><br>
             </div>
             <input type="submit" value="Create security group">

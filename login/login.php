@@ -9,10 +9,7 @@
         $conn = connection();
         $pwh = $conn->query($query);
         if ($passwordHashDb = mysqli_fetch_assoc($pwh)) {
-
             $passwordHash = hash("sha256", $_POST['password']);
-            echo $passwordHash . "\n";
-            var_dump($passwordHashDb);
             if ($passwordHash == $passwordHashDb["password_hash"]) {
                 echo "Password matching OK";
                 $_SESSION['email'] = $email;
@@ -21,7 +18,6 @@
             else {
                 header("Location: http://localhost:8888/login/login_page.php?error=wrongpassword");    
             }
-
         }
         else {
             header("Location: http://localhost:8888/login/login_page.php?error=invalidemail");

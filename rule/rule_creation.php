@@ -13,8 +13,8 @@
     $destIp = $_POST['dest_ip'];
     $protocol = $_POST['protocol'];
 
-    $securityGroupRuleId = create_security_group_ingress_rule($securityGroupName, $ruleName, $protocol, $destPortRange, $sourceIp);
-    if ($securityGroupRuleId === null) {
+    $cloudRuleId = create_security_group_ingress_rule($securityGroupName, $ruleName, $protocol, $destPortRange, $sourceIp);
+    if ($cloudRuleId === null) {
         echo "Something went bad on cloud side";
         echo "\n" . $returnCode;
     }
@@ -23,8 +23,8 @@
 
         $result = $conn->query($query);
         $sgId = $result->fetch_assoc()['id'];
-        $query = "INSERT INTO `security_group_rule` (`id_security_group`, `name`, `security_group_rule_id`, `source_port`, `dest_port_range`, `source_ip`, `dest_ip`, `protocol`)
-            VALUES ('$sgId', '$ruleName', '$securityGroupRuleId', '$sourcePort', '$destPortRange', '$sourceIp', '$destIp', '$protocol')";
+        $query = "INSERT INTO `security_group_rule` (`id_security_group`, `name`, `cloud_rule_id`, `source_port`, `dest_port_range`, `source_ip`, `dest_ip`, `protocol`)
+            VALUES ('$sgId', '$ruleName', '$cloudRuleId', '$sourcePort', '$destPortRange', '$sourceIp', '$destIp', '$protocol')";
         $conn->query($query) or die("ERROR WHEN INSERTING NEW RULE INTO DATABASE");
         header("Location: http://localhost:8888/rule/rule.php");
     }

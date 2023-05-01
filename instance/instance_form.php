@@ -4,9 +4,10 @@
     checkSession();
 
     $conn = connection();
-    $query = "SELECT name, security_group_id from security_group WHERE type != 'Father'";
+    $query = "SELECT name, cloud_security_group_id from security_group WHERE type != 'Father'";
 
-    $securityGroups = $conn->query($query);
+    $result = $conn->query($query);
+    $securityGroups = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -42,8 +43,8 @@
             <div id="checkboxes">
                 <?php foreach($securityGroups as $securityGroup) { ?>
                     <label for="<?php echo $securityGroup["name"]?>">
-                    <input type="checkbox" id="<?php echo $securityGroup["name"]?>" name="security_groups[]" value="<?php echo $securityGroup["security_group_id"]?>" /><?php echo $securityGroup["name"]?></label>
-                    <?php } ?>
+                    <input type="checkbox" id="<?php echo $securityGroup["name"]?>" name="security_groups[]" value="<?php echo $securityGroup["cloud_security_group_id"]?>" /><?php echo $securityGroup["name"]?></label>
+                <?php } ?>
             </div>
             </div>
                 <br>

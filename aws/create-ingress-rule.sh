@@ -1,4 +1,3 @@
-cd /Users/bart/.aws
 . ../aws/common
 /usr/local/bin/aws ec2 authorize-security-group-ingress \
     --group-name $1 \

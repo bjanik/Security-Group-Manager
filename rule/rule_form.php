@@ -6,6 +6,7 @@
     $conn = connection();
     $query = "SELECT name from `security_group`";
     $sgNames = $conn->query($query);
+    $sgNames = $sgNames->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -22,14 +23,11 @@
     <div class="container">
         <h1>Rule creation</h1>
         <form action="rule_creation.php" method="POST">
-            Security group name: <select name='security_group_name' placeholder="Security group name" required>
-            <?php
-                while ($sg = mysqli_fetch_array($sgNames, MYSQLI_ASSOC)):;
-            ?>
-                <option value="<?php echo $sg["name"];?>">
-                    <?php echo $sg["name"];?>
-                </option>
-            <?php endwhile; ?>
+            Security group name: 
+            <select name='security_group_name' placeholder="Security group name" required>
+                <?php foreach($sgNames as $sg) {
+                    echo "<option value={$sg['name']}>{$sg['name']}</option>";
+                } ?>
             </select></br>
             Rule name: <input type="text" name="rule_name" placeholder="Rule name" required></br>
             Ip source: <input type="text" name="source_ip" placeholder="Source IP" pattern="^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})(?:\/(?:[0-9]|[12][0-9]|3[0-2]))?$)|^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})-((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$" required></br>

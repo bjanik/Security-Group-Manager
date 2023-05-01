@@ -23,8 +23,8 @@
   function create_security_group_on_cloud_provider($providerId, $sgName) {
     $returnCode = 0;
     $output = "";
-    $groupId = exec("/Users/bart/.aws/create-sg.sh $sgName", $output, $returnCode);
-    if ($returnCode != 0) {
+    $groupId = exec("../aws/create-sg.sh $sgName", $output, $returnCode);
+    if ($returnCode !== 0) {
       return null;
     }
     return $groupId;
@@ -33,7 +33,7 @@
   function delete_security_group_on_cloud_provider($securityGroupId) {
     $returnCode = 0;
     $output = "";
-    exec("/Users/bart/.aws/delete-sg.sh '$securityGroupId'", $output, $returnCode);
+    exec("../aws/delete-sg.sh '$securityGroupId'", $output, $returnCode);
     return $returnCode;
   }
 
@@ -47,21 +47,11 @@
 
     $returnCode = 0;
     $output = "";
-    $securityGroupRuleId = exec("/Users/bart/.aws/create-ingress-rule.sh '$securityGroupName' '$ruleName' '$protocol' '$fromPort' '$toPort' '$cidr'", $output, $returnCode);
+    $securityGroupRuleId = exec("../aws/create-ingress-rule.sh '$securityGroupName' '$ruleName' '$protocol' '$fromPort' '$toPort' '$cidr'", $output, $returnCode);
     if ($returnCode != 0) {
       return null;
     }
     return $securityGroupRuleId;
-  }
-
-  function delete_security_group_rule_on_cloud_provider($securityGroupRuleId) {
-    $returnCode = 0;
-    $output = "";
-    $securityGroupRuleId = exec("/Users/bart/.aws/revoke-ingress-rule.sh '$securityGroupRuleId'", $output, $returnCode);
-    if ($returnCode != 0) {
-      return null;
-    }
-    return 0;
   }
 
   function create_instance_on_cloud_provider($instanceName, $instanceType, $securityGroups) {
