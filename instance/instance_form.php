@@ -23,6 +23,7 @@
 </head>
 <body>
     <?php include("../header.php");?>
+    <a href="instance.php"><button>&#8592;</button></a>
     <div class="container">
     <h1>Instance creation</h1>
     <form action="instance_creation.php" method="POST" class="container">

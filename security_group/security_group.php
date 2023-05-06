@@ -3,13 +3,17 @@
     session_start();
     checkSession();
 
+    $disabled = set_disabled($_SESSION);
     $conn = connection();
-    $query = "SELECT sg.`cloud_security_group_id`, sg.`name`, sg.`type`, sg.`cloud_provider`, sg2.name AS father_name FROM `security_group` sg LEFT JOIN security_group sg2 ON sg2.id = sg.id_father;";
+    $query = "SELECT sg.`cloud_security_group_id`, sg.`name`, sg.`type`, sg.`cloud_provider`, sg2.name AS father_name
+        FROM `security_group` sg
+        LEFT JOIN security_group sg2 ON sg2.id = sg.id_father;";
     $result = $conn->query($query);
     $securityGroups = [];
     if ($result->num_rows > 0) {
         $securityGroups = $result->fetch_all(MYSQLI_ASSOC);
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -35,22 +39,22 @@
             <th>Actions</th>
         </thead>
         <tbody>
-            <?php if(!empty($securityGroups)) { ?>
-                <?php foreach($securityGroups as $securityGroup) { ?>
-                    <tr>
-                        <td><?php echo $securityGroup['cloud_security_group_id']; ?></td>
-                        <td><?php echo $securityGroup['name']; ?></td>
-                        <td><?php echo $securityGroup['father_name']; ?></td>
-                        <td><?php echo $securityGroup['type']; ?></td>
-                        <td><?php echo $securityGroup['cloud_provider']; ?></td>
-                        <td><a href="../rule/rule.php?security_group_name=<?php echo $securityGroup['name']; ?>"><button class="action-btn">Show rules</button></a> | <a href="delete_security_group.php?cloud_security_group_id=<?php echo $securityGroup['cloud_security_group_id']; ?>"><button class="action-btn">Delete</button></a></td>
-                    </tr>
-                <?php } ?>
-            <?php } ?>
+            <?php if(!empty($securityGroups)) {
+                foreach($securityGroups as $securityGroup) {
+                    echo "<tr>";
+                        echo "<td>$securityGroup[cloud_security_group_id]</td>";
+                        echo "<td>$securityGroup[name]</td>";
+                        echo "<td>$securityGroup[father_name]</td>";
+                        echo "<td>$securityGroup[type]</td>";
+                        echo "<td>$securityGroup[cloud_provider]</td>";
+                        echo "<td><a href='../rule/rule.php?security_group_name=$securityGroup[name]'><button class='action-btn'>Show rules</button></a> | <a href='delete_security_group.php?cloud_security_group_id=$securityGroup[cloud_security_group_id]'><button class='action-btn' $disabled>Delete</button></a></td>";
+                    echo "</tr>";
+                }
+            } ?>
         </tbody>
     </table>
     <div>
-        <a href="security_group_form.php"><button>Create security group</button></a>
+        <?php echo "<a href='security_group_form.php'><button echo $disabled>Create security group</button></a>"; ?>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>

@@ -4,25 +4,23 @@
 
     if (!empty($_POST['email']) && !empty($_POST['password'])){
         $email = $_POST['email'];
-        $query = "SELECT password_hash from User WHERE email = '$email'";
+        $query = "SELECT password_hash, rights from User WHERE email = '$email'";
 
         $conn = connection();
         $pwh = $conn->query($query);
-        if ($passwordHashDb = mysqli_fetch_assoc($pwh)) {
+        if ($user = mysqli_fetch_assoc($pwh)) {
             $passwordHash = hash("sha256", $_POST['password']);
-            if ($passwordHash == $passwordHashDb["password_hash"]) {
-                echo "Password matching OK";
+            if ($passwordHash == $user["password_hash"]) {
                 $_SESSION['email'] = $email;
+                $_SESSION['rights'] = $user["rights"];
                 header("Location: http://localhost:8888");
             }
             else {
-                header("Location: http://localhost:8888/login/login_page.php?error=wrongpassword");    
+                header("Location: http://localhost:8888/user/login_page.php?error=wrongpassword");    
             }
         }
         else {
-            header("Location: http://localhost:8888/login/login_page.php?error=invalidemail");
+            header("Location: http://localhost:8888/user/login_page.php?error=invalidemail");
         }
-
-
     }
 ?>

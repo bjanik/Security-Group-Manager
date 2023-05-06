@@ -4,10 +4,13 @@
         <?php
         if (!empty($_SESSION['email'])) {
             echo "<div>{$_SESSION['email']}</div>";
-            echo "<a href='/logout/logout.php'><button>Logout</button></a>";
+            echo "<a href='/user/logout.php'><button>Logout</button></a>";
         }
         else {
-            echo "<a href=/login/login_page.php><button>Login</button></a>";
+            echo "<div>";
+            echo "<a href=/user/sign_up_page.php><button>Sign-up</button></a>";
+            echo "<a href=/user/login_page.php><button>Login</button></a>";
+            echo "</div>";
         }
         ?>
     </div>

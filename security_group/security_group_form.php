@@ -15,6 +15,8 @@
     $query = "SELECT id, name from `security_group` WHERE type = 'Father'";
     $fathers = $conn->query($query);
     $fathers = $fathers->fetch_all(MYSQLI_ASSOC);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -23,13 +25,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="/index.css">
     <title>Create security group</title>
 </head>
 <body>
     <?php include("../header.php");?>
     <div class="container title">
         <h1>Security group creation</h1>
+        <?php if (isset($_GET["cloud_error"])) {
+            echo "<p class='error'>Error on cloud side</p>";
+        }
+        ?>
         <form action="security_group_creation.php" method="POST">
             Name <input type="text" name="name" placeholder="Name" required maxlength="64"><br>
             Cloud provider <select name="cloud_provider" required>

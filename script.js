@@ -1,4 +1,4 @@
-var expanded = false;
+let expanded = false;
 
 function showCheckboxes() {
   var checkboxes = document.querySelector("#checkboxes");
@@ -14,7 +14,6 @@ function showCheckboxes() {
 const fathersList = document.querySelector("#fathersList");
 const fathersListSelection = document.querySelector("#fatherSelection");
 const securityGroupType = document.querySelector("#sgType");
-console.log(securityGroupType);
 
 securityGroupType.addEventListener("change", (e) => {
   if (e.target.value === "Son" && fathersList.style.display === "") {
@@ -29,15 +28,3 @@ securityGroupType.addEventListener("change", (e) => {
   }
 
 });
-
-// function showSecurityGroupsFatherType(cloudProvider) {
-//   var xmlhttp = new XMLHttpRequest();
-//     xmlhttp.onreadystatechange = function() {
-//       if (this.readyState == 4 && this.status == 200) {
-//         fatherSecurityGroupSelection = document.querySelector("#fatherList");
-//         document.getElementById("").innerHTML = this.responseText;
-//       }
-//     };
-//     xmlhttp.open("GET", "security_group/get_father_security_groups.php?cloud_provider=" + cloudProvider, true);
-//     xmlhttp.send();
-// }

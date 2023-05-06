@@ -20,7 +20,7 @@
     $sgName = $securityGroupPrefixes[$sgType] . $_POST["name"];
     $cloudSecurityGroupId = create_security_group_on_cloud_provider($cloudProvider, $sgName);
     if ($cloudSecurityGroupId === null) {
-        echo "An error occured on cloud side";
+        header("Location: http://localhost:8888/security_group/security_group_form.php?cloud_error");
     }
     else {
         $conn = connection();

@@ -75,4 +75,14 @@
     return 0;
   }
 
+  function set_disabled($session) {
+    if ($session['rights'] === 'Reader') {
+       $disabled = 'disabled';
+    }
+    else {
+      $disabled = '';
+    }
+    return $disabled;
+  }
+
 ?>

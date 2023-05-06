@@ -27,10 +27,10 @@ form {
     justify-content: center;
     width: 40%;
 }
-.topnav {
+header {
     display: flex;
     justify-content: space-between;
-    height: 10%;
+    height: 25%;
 }
 
 .container {
@@ -46,6 +46,11 @@ button {
     border-color: #ff9900;
     cursor: pointer;
     width: 150px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
 }
 
 .action-btn {
@@ -117,4 +122,8 @@ table tr:nth-child(even) td{
   display: flex;
   justify-content: flex-end;
   gap: 2%;
+}
+
+.error {
+  color: red;
 }

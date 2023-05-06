@@ -8,31 +8,25 @@
     $securityGroupsStr = join(" ", $securityGroups);
     $securityGroups = join("','", $securityGroups);
     
-    $query = "SELECT id, id_father FROM `security_group` WHERE cloud_security_group_id IN ('$securityGroups')";
+    $query = "SELECT DISTINCT sg.cloud_security_group_id, sg.id, sg2.cloud_security_group_id AS father_cloud_id, sg2.id AS father_id
+        FROM security_group sg
+        LEFT JOIN security_group sg2 ON sg2.id = sg.id_father
+        WHERE sg.cloud_security_group_id IN ('$securityGroups')";
 
-    $result = $conn->query($query);
-    $result = $result->fetch_all(MYSQLI_ASSOC);
-    $idsFather = [];
-    $ids = [];
-    foreach($result as $row) {
-        if ($row['id_father']) {
-            $idsFather[] = $row['id_father'];
-            $ids[] = $row['id_father'];
-        }
-        $ids[] = $row['id'];
-    }
-    $idsFather = array_unique($idsFather);
-    $ids = array_unique($ids);
-    $idsFatherStr = join("','", array_unique($idsFather));
-
-    $query = "SELECT cloud_security_group_id FROM security_group WHERE id IN ('$idsFatherStr')";
     $result = $conn->query($query);
     $result = $result->fetch_all(MYSQLI_ASSOC);
     $cloudIds = [];
+    $ids = [];
     foreach($result as $row) {
+        if ($row['father_id']) {
+            $cloudIds[] = $row['father_cloud_id'];
+            $ids[] = $row['father_id'];
+        }
         $cloudIds[] = $row['cloud_security_group_id'];
+        $ids[] = $row['id'];
     }
     $cloudIds = array_unique($cloudIds);
+    $ids = array_unique($ids);
 
     if ($cloudIds) {
         $cloudIds = join(" ", $cloudIds) . " " . $securityGroupsStr;
@@ -42,6 +36,7 @@
     }
     $instanceData = create_instance_on_cloud_provider($instanceName, $instanceType, $cloudIds);
     if ($instanceData == null) {
+        header("Location: http://localhost:8888/instance/instance_form.php?cloud_error");
         echo "NULL";
     }
     else {
@@ -54,7 +49,7 @@
         $instanceId = (int) mysqli_insert_id($conn);
 
         $query = "INSERT INTO `instance_security_group_assoc` (`id_instance`, `id_security_group`) VALUES ";
-        $queryParts = array();
+        $queryParts = [];
         foreach($ids as $id) {
             $id = (int) $id;
             $queryParts[] =  "('" . $instanceId . "','" . $id . "')"; 

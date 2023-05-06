@@ -9,12 +9,11 @@
     <title>Login</title>
 </head>
 <body>
+    <?php include('../header.php')?>
     <form action="login.php" method="POST">
-        Sign-in
-        </br>
-            Email: <input type="text" name="email" required placeholder="email"><?php ?></br>
-            Password: <input type="password" name="password" required placeholder="password">
-        </br>
+        <h2>Sign-in</h2></br>
+        Email: <input type="text" name="email" required placeholder="Email"><?php ?></br>
+        Password: <input type="password" name="password" required placeholder="Password"></br>
         <input type="submit" value="Submit">
     </form>
     <?php
