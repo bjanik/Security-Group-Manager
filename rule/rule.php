@@ -1,7 +1,7 @@
 <?php
     require_once('../utils/utils.php');
     session_start();
-    checkSession();
+    checkSessionRights();
 
     $disabled = set_disabled($_SESSION);
     $conn = connection();
@@ -31,9 +31,9 @@
     <title>Security groups</title>
 </head>
 <body>
+    <?php include("../header.php");?>
+    <a href='/security_group/security_group.php'><button>&#8592;</button></a>
     <?php
-        include("../header.php");
-        echo "<a href='/security_group/security_group.php'><button>&#8592;</button></a>";
         if (isset($_GET["security_group_name"])) {
             echo "<h2> Rules for security group $_GET[security_group_name]</h2>";
         }

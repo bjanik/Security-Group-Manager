@@ -1,6 +1,7 @@
 <?php
     require_once('../utils/utils.php');
     $conn = connection();
+    checkSessionRights(['Administrator']);
     parse_str($_SERVER['QUERY_STRING'], $params);
 
     $newRights = $params['rights'];

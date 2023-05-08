@@ -2,7 +2,7 @@
     require_once('../utils/utils.php');
 
     session_start();
-    checkSession();
+    checkSessionRights(['Administrator', 'Contributor']);
 
     parse_str($_SERVER['QUERY_STRING'], $params);
     $securityGroupId = $params["cloud_security_group_id"];

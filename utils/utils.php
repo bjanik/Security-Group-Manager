@@ -14,8 +14,11 @@
     mysqli_close($conn);
   }
 
-  function checkSession() {
-    if (empty($_SESSION['email'])) {
+  function checkSessionRights($rights = null) {
+    if (
+      empty($_SESSION['email']) ||
+      ($rights && !in_array($_SESSION['rights'], $rights))
+    ) {
       header("Location: http://localhost:8888");
     }
   }
@@ -54,6 +57,16 @@
     return $securityGroupRuleId;
   }
 
+  function delete_security_group_rule_on_cloud_provider($securityGroupRuleId, $securityGroupId) {
+    $returnCode = 0;
+    $output = "";
+    $securityGroupRuleId = exec("../aws/revoke-ingress-rule.sh '$securityGroupId' '$securityGroupRuleId'", $output, $returnCode);
+    if ($returnCode != 0) {
+      return null;
+    }
+    return 0;
+  }
+
   function create_instance_on_cloud_provider($instanceName, $instanceType, $securityGroups) {
     $returnCode = 0;
     $output = "";
@@ -63,6 +76,15 @@
       return null;
     }
     $instanceData = json_decode(implode("", $output), TRUE);
+    if ($instanceData) {
+      $output = "";
+      $instanceId = $instanceData["Instances"][0]["InstanceId"];
+      exec("../aws/get-instance-public-dns.sh '$instanceId'", $output, $returnCode);
+      if ($returnCode != 0) {
+        return null;
+      }
+      $instanceData["publicDns"] = $output[0];
+    }
     return $instanceData;
   }
 

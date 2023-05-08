@@ -18,11 +18,11 @@
         <div class="menu">
             <?php
                 if (!empty($_SESSION['email'])) {
-                    echo "<a href='security_group/security_group.php'><button>Security groups</button></a>";
-                    echo "<a href='instance/instance.php'><button>Instances</button></a>";
+                    echo "<a href='security_group/security_group.php'><button>Manage security groups</button></a>";
+                    echo "<a href='instance/instance.php'><button>Manage instances</button></a>";
                 }
                 if (!empty($_SESSION['rights']) && $_SESSION['rights'] === 'Administrator') {
-                    echo "<a href='user/user.php'><button>Manage rights</button></a>";
+                    echo "<a href='user/user.php'><button>Manage users rights</button></a>";
                 }
             ?>
         <div>

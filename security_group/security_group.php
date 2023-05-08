@@ -1,7 +1,7 @@
 <?php
     require_once('../utils/utils.php');
     session_start();
-    checkSession();
+    checkSessionRights();
 
     $disabled = set_disabled($_SESSION);
     $conn = connection();
@@ -12,8 +12,7 @@
     $securityGroups = [];
     if ($result->num_rows > 0) {
         $securityGroups = $result->fetch_all(MYSQLI_ASSOC);
-    }
-
+    }   
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +27,7 @@
 </head>
 <body>
     <?php include("../header.php");?>
+    <a href="/index.php"><button>&#8592; Back</button></a>
     <h1>Security groups</h1>
     <table id="tblSg">
         <thead>

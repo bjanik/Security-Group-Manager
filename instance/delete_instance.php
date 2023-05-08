@@ -1,7 +1,8 @@
 <?php
     require_once('../utils/utils.php');
     session_start();
-    checkSession();
+    checkSessionRights(['Administrator', 'Contributor']);
+
 
     parse_str($_SERVER['QUERY_STRING'], $params);
     $cloudInstanceId = $params["cloud_instance_id"];

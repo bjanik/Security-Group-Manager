@@ -10,17 +10,17 @@
         $pwh = $conn->query($query);
         if ($user = mysqli_fetch_assoc($pwh)) {
             $passwordHash = hash("sha256", $_POST['password']);
-            if ($passwordHash == $user["password_hash"]) {
+            if ($passwordHash == $user['password_hash']) {
                 $_SESSION['email'] = $email;
-                $_SESSION['rights'] = $user["rights"];
+                $_SESSION['rights'] = $user['rights'];
                 header("Location: http://localhost:8888");
             }
             else {
-                header("Location: http://localhost:8888/user/login_page.php?error=wrongpassword");    
+                header("Location: http://localhost:8888/user/sign_in_page.php?error=wrongpassword");    
             }
         }
         else {
-            header("Location: http://localhost:8888/user/login_page.php?error=invalidemail");
+            header("Location: http://localhost:8888/user/sign_in_page.php?error=invalidemail");
         }
     }
 ?>

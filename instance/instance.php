@@ -1,10 +1,11 @@
 <?php
     require_once('../utils/utils.php');
     session_start();
+    checkSessionRights();
 
     $disabled = set_disabled($_SESSION);
     $conn = connection();
-    $query = "SELECT i.cloud_instance_id, i.name, i.type, i.private_ip, i.public_ip, GROUP_CONCAT(sg.name SEPARATOR ', ') as security_groups
+    $query = "SELECT i.cloud_instance_id, i.name, i.type, i.private_ip, i.public_dns, GROUP_CONCAT(sg.name SEPARATOR ', ') as security_groups
         FROM instance i
         JOIN instance_security_group_assoc assoc ON i.id = assoc.`id_instance`
         JOIN security_group sg ON sg.id = assoc.`id_security_group`
@@ -28,13 +29,15 @@
 </head>
 <body>
     <?php include("../header.php");?>
-    <a href="../index.php"><button>&#8592;</button></a>
+    <a href="../index.php"><button>&#8592; Back</button></a></br>
+    <h1>Instances</h1>
     <table id="tblInstance">
         <thead>
             <th>Instance id</th>
             <th>Name</th>
             <th>Security groups</th>
             <th>Type</th>
+            <th>Public DNS</th>
             <th>Private IP</th>
             <th>Actions</th>
         </thead>
@@ -46,8 +49,9 @@
                         echo "<td>$instance[name]</td>";
                         echo "<td>$instance[security_groups]</td>";
                         echo "<td>$instance[type]</td>";
+                        echo "<td>$instance[public_dns]</td>";
                         echo "<td>$instance[private_ip]</td>";
-                        echo "<td><a href='instance_attachment_form.php?instance_name=$instance[name]'><button class='action-btn'>Manage attachment</button></a> | <a href='delete_instance.php?cloud_instance_id=$instance[cloud_instance_id]'><button class='action-btn' $disabled>Delete</button></a></td>";
+                        echo "<td><a href='delete_instance.php?cloud_instance_id=$instance[cloud_instance_id]'><button class='action-btn' $disabled>Delete</button></a></td>";
                     echo "</tr>";
                 }
             } ?>

@@ -2,7 +2,7 @@
 <?php
     require_once('../utils/utils.php');
     session_start();
-    checkSession();
+    checkSessionRights(['Administrator']);
 
     $switchRights = array(
         "Reader" => "Contributor",

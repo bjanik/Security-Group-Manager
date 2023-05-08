@@ -1,7 +1,8 @@
 <?php
     require_once('../utils/utils.php');
     session_start();
-    checkSession();
+    checkSessionRights(['Administrator', 'Contributor']);
+
     
     $conn = connection();
     $query = "SELECT name from `security_group`";
@@ -20,13 +21,15 @@
 </head>
 <body>
     <?php include("../header.php");?>
+    <a href="instance.php"><button>&#8592; Back</button></a>
+    </br>
     <div class="container">
-        <h1>Rule creation</h1>
         <form action="rule_creation.php" method="POST">
+            <h1>Rule creation</h1>
             Security group name: 
             <select name='security_group_name' placeholder="Security group name" required>
                 <?php foreach($sgNames as $sg) {
-                    echo "<option value={$sg['name']}>{$sg['name']}</option>";
+                    echo "<option value=$sg[name]>$sg[name]</option>";
                 } ?>
             </select></br>
             Rule name: <input type="text" name="rule_name" placeholder="Rule name" required></br>
@@ -34,7 +37,7 @@
             Port source: <input value="Any" type="text" name="source_port" placeholder="Source port" pattern="(\d+)|Any" required></br>
             Destination port range: <input type="text" name="dest_port_range" placeholder="Destination port range" pattern="(\d+)|(\d+)-(\d+)" required></br>
             Protocol: <input type="text" name="protocol" placeholder="Protocol" required></br>
-        <input type="submit" value="Create rule">
+            <input type="submit" value="Create rule">
         </form>
     </div>
 </body>

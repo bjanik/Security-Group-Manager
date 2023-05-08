@@ -1,7 +1,7 @@
 <?php
     require_once('../utils/utils.php');
     session_start();
-    checkSession();
+    checkSessionRights();
     
     parse_str($_SERVER['QUERY_STRING'], $params);
     $conn = connection();
