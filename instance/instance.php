@@ -7,8 +7,8 @@
     $conn = connection();
     $query = "SELECT i.cloud_instance_id, i.name, i.type, i.private_ip, i.public_dns, GROUP_CONCAT(sg.name SEPARATOR ', ') as security_groups
         FROM instance i
-        JOIN instance_security_group_assoc assoc ON i.id = assoc.`id_instance`
-        JOIN security_group sg ON sg.id = assoc.`id_security_group`
+        JOIN instance_security_group_assoc assoc ON i.id = assoc.id_instance
+        JOIN security_group sg ON sg.id = assoc.id_security_group
         GROUP BY i.name";
     $result = $conn->query($query);
     $instances = [];
@@ -29,7 +29,7 @@
 </head>
 <body>
     <?php include("../header.php");?>
-    <a href="../index.php"><button>&#8592; Back</button></a></br>
+    <a href="../index.php"><button>&#8592; Back</button></a>
     <h1>Instances</h1>
     <table id="tblInstance">
         <thead>
@@ -51,7 +51,7 @@
                         echo "<td>$instance[type]</td>";
                         echo "<td>$instance[public_dns]</td>";
                         echo "<td>$instance[private_ip]</td>";
-                        echo "<td><a href='delete_instance.php?cloud_instance_id=$instance[cloud_instance_id]'><button class='action-btn' $disabled>Delete</button></a></td>";
+                        echo "<td><a href='../rule/rule.php?instance_name=$instance[name]'><button class='action-btn'>Show rules</button></a> | <a href='delete_instance.php?cloud_instance_id=$instance[cloud_instance_id]'><button class='action-btn' $disabled>Delete</button></a></td>";
                     echo "</tr>";
                 }
             } ?>

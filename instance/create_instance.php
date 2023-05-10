@@ -56,7 +56,7 @@
             $queryParts = [];
             foreach($ids as $id) {
                 $id = (int) $id;
-                $queryParts[] =  "('" . $instanceId . "','" . $id . "')"; 
+                $queryParts[] =  "('" . $instanceId . "','" . $id . "')";
             }
             $query .= implode(",", $queryParts);
             $conn->query($query) or die("");

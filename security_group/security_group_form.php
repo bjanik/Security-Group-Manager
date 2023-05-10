@@ -24,7 +24,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/index.css">
-    <title>Create security group</title>
+    <title>Security group creation</title>
 </head>
 <body>
     <?php include("../header.php");?>
@@ -34,7 +34,7 @@
             echo "<p class='error'>Error on cloud side</p>";
         }
         ?>
-        <form action="security_group_creation.php" method="POST">
+        <form action="create_security_group.php" method="POST">
             <h1>Security group creation</h1>
             Name <input type="text" name="name" placeholder="Name" required maxlength="64"><br>
             Cloud provider <select name="cloud_provider" required>

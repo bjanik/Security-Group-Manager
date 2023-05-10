@@ -12,7 +12,7 @@
     $securityGroups = [];
     if ($result->num_rows > 0) {
         $securityGroups = $result->fetch_all(MYSQLI_ASSOC);
-    }   
+    }
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +28,12 @@
 <body>
     <?php include("../header.php");?>
     <a href="/index.php"><button>&#8592; Back</button></a>
+    <?php
+        if (isset($_GET["cloud_error"])) {
+            $error = $_GET["cloud_error"];
+            echo "<p class='error'>An error occured on cloud side</p>";
+        }
+    ?>
     <h1>Security groups</h1>
     <table id="tblSg">
         <thead>

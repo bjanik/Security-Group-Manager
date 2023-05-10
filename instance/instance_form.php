@@ -26,7 +26,7 @@
     <a href="instance.php"><button>&#8592; Back</button></a>
     </br>
     <div class="container">
-        <form action="instance_creation.php" method="POST">
+        <form action="create_instance.php" method="POST">
             <h1>Instance creation</h1>
             <?php
                 if (isset($_GET["error"])) {

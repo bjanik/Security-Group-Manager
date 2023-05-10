@@ -26,7 +26,7 @@
   function create_security_group_on_cloud_provider($providerId, $sgName) {
     $returnCode = 0;
     $output = "";
-    $groupId = exec("../aws/create-sg.sh $sgName", $output, $returnCode);
+    $groupId = exec("../aws/create-security-group.sh $sgName", $output, $returnCode);
     if ($returnCode !== 0) {
       return null;
     }
@@ -36,7 +36,7 @@
   function delete_security_group_on_cloud_provider($securityGroupId) {
     $returnCode = 0;
     $output = "";
-    exec("../aws/delete-sg.sh '$securityGroupId'", $output, $returnCode);
+    exec("../aws/delete-security-group.sh '$securityGroupId'", $output, $returnCode);
     return $returnCode;
   }
 
@@ -98,13 +98,21 @@
   }
 
   function set_disabled($session) {
+    $disabled = '';
     if ($session['rights'] === 'Reader') {
        $disabled = 'disabled';
     }
-    else {
-      $disabled = '';
-    }
     return $disabled;
+  }
+
+  function run_query($conn, $query) {
+    $result = $conn->query($query);
+    if ($conn->error) {
+
+    }
+    else {
+      return $result;
+    }
   }
 
 ?>

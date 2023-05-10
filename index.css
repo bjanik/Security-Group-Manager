@@ -52,7 +52,8 @@ button {
   background: #ff9900;
   border-color: #ff9900;
   cursor: pointer;
-  width: 150px;
+  width: fit-content;
+  min-width: 120px;
 }
 
 button:disabled {

@@ -8,8 +8,7 @@
     $securityGroupId = $params["cloud_security_group_id"];
     $returnCode = delete_security_group_on_cloud_provider($securityGroupId);
     if ($returnCode != 0) {
-        echo "Failed to delete security group with id " . $securityGroupId;
-        header("Location: http://localhost:8888/security_group/security_group.php?error=$securityGroupId");
+        header("Location: http://localhost:8888/security_group/security_group.php?cloud_error=$securityGroupId");
     }
     else {
         $conn = connection();

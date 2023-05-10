@@ -3,7 +3,6 @@
     session_start();
     checkSessionRights(['Administrator', 'Contributor']);
 
-    
     $conn = connection();
     $query = "SELECT name from `security_group`";
     $sgNames = $conn->query($query);
@@ -21,10 +20,10 @@
 </head>
 <body>
     <?php include("../header.php");?>
-    <a href="instance.php"><button>&#8592; Back</button></a>
+    <a href="../security_group/security_group.php"><button>&#8592; Back</button></a>
     </br>
     <div class="container">
-        <form action="rule_creation.php" method="POST">
+        <form action="create_rule.php" method="POST">
             <h1>Rule creation</h1>
             Security group name: 
             <select name='security_group_name' placeholder="Security group name" required>
