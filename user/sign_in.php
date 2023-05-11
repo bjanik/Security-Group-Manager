@@ -1,6 +1,7 @@
 <?php
     require_once('../utils/utils.php');
     session_start();
+    $hostname = gethostname();
 
     if (!empty($_POST['email']) && !empty($_POST['password'])){
         $email = $_POST['email'];
@@ -13,14 +14,14 @@
             if ($passwordHash == $user['password_hash']) {
                 $_SESSION['email'] = $email;
                 $_SESSION['rights'] = $user['rights'];
-                header("Location: http://localhost:8888");
+                header("Location: /index.php");
             }
             else {
-                header("Location: http://localhost:8888/user/sign_in_page.php?error=wrongpassword");    
+                header("Location: /user/sign_in_page.php?error=wrongpassword");    
             }
         }
         else {
-            header("Location: http://localhost:8888/user/sign_in_page.php?error=invalidemail");
+            header("Location: /user/sign_in_page.php?error=invalidemail");
         }
     }
 ?>

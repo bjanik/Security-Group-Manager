@@ -10,7 +10,7 @@
     );
     
     $conn = connection();
-    $query = "SELECT email, rights from user WHERE rights != 'Administrator'";
+    $query = "SELECT email, rights from User WHERE rights != 'Administrator'";
     $users = $conn->query($query);
     $users = $users->fetch_all(MYSQLI_ASSOC);
 ?>

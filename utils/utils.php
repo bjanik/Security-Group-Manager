@@ -19,14 +19,14 @@
       empty($_SESSION['email']) ||
       ($rights && !in_array($_SESSION['rights'], $rights))
     ) {
-      header("Location: http://localhost:8888");
+      header("Location: /index.php");
     }
   }
 
   function create_security_group_on_cloud_provider($providerId, $sgName) {
     $returnCode = 0;
     $output = "";
-    $groupId = exec("../aws/create-security-group.sh $sgName", $output, $returnCode);
+    $groupId = exec("../aws/create-security-group.sh '$sgName'", $output, $returnCode);
     if ($returnCode !== 0) {
       return null;
     }
@@ -70,7 +70,6 @@
   function create_instance_on_cloud_provider($instanceName, $instanceType, $securityGroups) {
     $returnCode = 0;
     $output = "";
-    $input = "../aws/create-instance.sh '$instanceName' '$instanceType' '$securityGroups'";
     exec("../aws/create-instance.sh '$instanceName' '$instanceType' '$securityGroups'", $output, $returnCode);
     if ($returnCode != 0) {
       return null;

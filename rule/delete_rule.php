@@ -15,12 +15,12 @@
     $returnCode = delete_security_group_rule_on_cloud_provider($cloudRuleId, $securityGroupId);
     if ($returnCode != 0) {
         echo "Failed to delete security group rule with id " . $cloudRuleId;
-        header("Location: http://localhost:8888/rule/rule.php?error=error");
+        header("Location: /rule/rule.php?error=error");
     }
     else {
         $query = "DELETE FROM `security_group_rule` WHERE cloud_rule_id = '$params[cloud_rule_id]'";
         $conn->query($query) or die("Mysql error");
-        header("Location: http://localhost:8888/rule/rule.php");
+        header("Location: /rule/rule.php");
     }
 
 

@@ -31,7 +31,7 @@
     <?php
         if (isset($_GET["cloud_error"])) {
             $error = $_GET["cloud_error"];
-            echo "<p class='error'>An error occured on cloud side</p>";
+            echo "<p class='error'>An error occured on cloud side</p><br>";
         }
     ?>
     <h1>Security groups</h1>

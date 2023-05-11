@@ -12,19 +12,20 @@
     <div class="container">
         <form action="sign_up.php" method="POST">
             <h2>Sign up</h2></br>
+            <?php
+                if (isset($_GET["error"])) {
+                    $error = $_GET["error"];
+                    if ($error === "alreadyExists") {
+                        echo "<p class='error'>Email already exists</p>";
+                    }
+                }
+            ?>
             Email: <input type="text" name="email" required placeholder="Email"><?php ?></br>
             Password: <input id="password" type="password" name="password" required placeholder="Password"></br>
             Confirm password: <input id="confirm_password" type="password" name="password" required placeholder="Confirm Password"></br>
             <input type="submit" value="Create account">
-            </form>
-        <?php
-            if (isset($_GET["error"])) {
-                $error = $_GET["error"];
-                if ($error === "alreadyExists") {
-                    echo "<p class='error'>Email already exists</p>";
-                }
-            }
-        ?>
+        </form>
+       
     </div>
     <script src="pwd_confirmation.js" type="text/javascript"></script>
 </body>

@@ -16,7 +16,7 @@
 
         $cloudRuleId = create_security_group_ingress_rule($securityGroupName, $ruleName, $protocol, $destPortRange, $sourceIp);
         if ($cloudRuleId === null) {
-            header("Location: http://localhost:8888/security_group/security_group.php?cloud_error=$securityGroupId");
+            header("Location: /security_group/security_group.php?cloud_error=$securityGroupId");
         }
         else {
             $query = "SELECT id from security_group WHERE `name` = '$securityGroupName'";
@@ -26,7 +26,7 @@
             $query = "INSERT INTO `security_group_rule` (`id_security_group`, `name`, `cloud_rule_id`, `source_port`, `dest_port_range`, `source_ip`, `dest_ip`, `protocol`)
                 VALUES ('$sgId', '$ruleName', '$cloudRuleId', '$sourcePort', '$destPortRange', '$sourceIp', '$destIp', '$protocol')";
             $conn->query($query);
-            header("Location: http://localhost:8888/rule/rule.php?security_group_name=$securityGroupName");
+            header("Location: /rule/rule.php?security_group_name=$securityGroupName");
         }
     }
 ?>

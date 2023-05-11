@@ -60,11 +60,11 @@
             }
             $query .= implode(",", $queryParts);
             $conn->query($query) or die("");
-            header("Location: http://localhost:8888/instance/instance.php");
+            header("Location: /instance/instance.php");
         }
     }
     if (empty($_POST["security_groups"])) {
-        header("Location: http://localhost:8888/instance/instance_form.php?error=missing_security_groups");
+        header("Location: /instance/instance_form.php?error=missing_security_groups");
     }
 
 ?>

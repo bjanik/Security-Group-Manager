@@ -6,7 +6,7 @@
 
     $newRights = $params['rights'];
     $email = $params['email'];
-    $query = "UPDATE user SET rights = '$newRights' WHERE email = '$email'";
+    $query = "UPDATE User SET rights = '$newRights' WHERE email = '$email'";
     $conn->query($query);
-    header("Location: http://localhost:8888/user/user.php");
+    header("Location: /user/user.php");
 ?>
